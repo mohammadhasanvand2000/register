@@ -5,17 +5,23 @@ from .validators import validate_iranian_phoneNumber
 from django.contrib.auth.models import BaseUserManager
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, username, password=None,is_active=True ,**extra_fields):
+    def create_user(self, email, password, **extra_fields):
         if not email:
             raise ValueError("شماره تلفن الزامی است.")
 
         email = self.normalize_email(email)
-        user = self.model(email=email, username=username,is_active=True, **extra_fields)
-        user.is_active = True
+        user = self.model(email=email, **extra_fields)
         user.set_password(password)
+
         user.save(using=self._db)
         return user
+    def create_superuser(self, email, password=None, **extra_fields):
+    # اضافه کردن مقدار True به is_staff و is_superuser
+        extra_fields.setdefault('is_staff', True)
+        
 
+        return self.create_user(email, password, **extra_fields)
+    
 class User(AbstractBaseUser):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=60)
@@ -29,12 +35,12 @@ class User(AbstractBaseUser):
     )
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'name', 'phoneNumber']
+    REQUIRED_FIELDS = ['name', 'phoneNumber']
 
     def __str__(self):
         return self.name

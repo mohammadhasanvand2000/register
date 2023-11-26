@@ -1,3 +1,5 @@
+{% extends "product/index.html" %}
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -6,7 +8,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Vesperr Bootstrap Template - Index</title>
+  
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -55,9 +57,9 @@
 
       <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
         <h1 style="color: rgb(0, 255, 68);">200</h1>
+        <h1>سلام {{name}} عزیز </h1>
         <h2>شما با موفقیت ثبت نام شدید </h2>
         <a style="background-color: rgb(228, 40, 231);" class="btn" href="{% url 'login' %}"> وارد اکانت خود شوید </a>
-        <img src="{% static 'assets/img/su.jpg' %}" class="img-fluid py-5" alt="Page Not Found">
         
       </section>
 

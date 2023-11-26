@@ -2,15 +2,16 @@ from django.contrib.auth.backends import BaseBackend
 from .models import User
 
 class UserPhoneBackend(BaseBackend):
-    def authenticate(self, request, backend=None, username=None, password=None, **kwargs):
-       
+    def authenticate(self, request,backend=None, username=None, password=None):
         try:
-            if username:
+            if username.isdigit():
+                user = User.objects.get(phoneNumber=username)
+            else:
                 user = User.objects.get(email=username)
-            
-                print (user.name)
-                if user.check_password(password):
-                    return user
+                print("befor")
+                user.check_password(password)
+                print("after")
+                return user
         except User.DoesNotExist:
             pass
 
@@ -18,6 +19,6 @@ class UserPhoneBackend(BaseBackend):
 
     def get_user(self, user_id):
         try:
-            return User.objects.get(id=user_id)
+            return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             return None

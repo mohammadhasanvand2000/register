@@ -1,3 +1,4 @@
+{% extends "product/index.html" %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -6,7 +7,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Vesperr Bootstrap Template - Index</title>
+  <title>خطا !</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -39,21 +40,29 @@
 </head>
 
 <body>
-  {% block progras %}
+  {% block content %}
   <main>
     <main>
       <div class="container">
         <div class="row justify-content-center">
           <div style="height: auto;" class="col-lg-6  col-md-6 d-flex flex-column align-items-center justify-content-center">
   
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
-              </div>
-              <a style="background-color: rgb(32, 242, 9);" class="btn" href="{% url 'upload_csv_api' %}">توقف</a>
-              <a style="background-color: rgb(32, 242, 9);" class="btn" href="{% url 'upload_csv_api' %}">شروع</a>
+              
+              <a href="{% url 'index' %}" class="logo d-flex align-items-center w-auto">
+                
+              </a>
+            </div><!-- End Logo -->
+  
+            <div class=" card mb-3">
+  
+        <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+          <div dir="rtl" class="alert alert-succes" role="alert">
+              <h2 class="alert-heading">ok</h2>
+              <p>شما با موفقیت خارج شدید </p>
+              <hr>
+              <a style="background-color: rgb(32, 242, 9);" class="btn" href="{% url 'login' %}">ورود دوباره</a>
             </div>
           
-         
           
         </section>
   
@@ -79,52 +88,6 @@
 
   <script src="{% static 'assets/js/main.js' %}"></script>
   
-
-<div id="emailProgressContainer">
-    <div class="progress">
-        <div id="emailProgressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0"
-            aria-valuemin="0" aria-valuemax="100">0%</div>
-    </div>
-</div>
-
-<script>
-    $(document).ready(function () {
-        var emailProgressBar = $('#emailProgressBar');
-        var emailProgressContainer = $('#emailProgressContainer');
-
-        function updateProgressBar(percentage) {
-            emailProgressBar.css('width', percentage + '%');
-            emailProgressBar.attr('aria-valuenow', percentage);
-            emailProgressBar.text(percentage + '%');
-        }
-
-        function stopProgress() {
-            emailProgressContainer.hide();
-        }
-
-       
-        $.ajax({
-            type: 'GET',
-            url: '{% url "send" %}',
-            success: function (data) {
-                console.log(data);
-                stopProgress();
-            },
-            error: function (error) {
-                console.log(error);
-                stopProgress();
-            },
-            xhrFields: {
-                onprogress: function (e) {
-                    if (e.lengthComputable) {
-                        var percentage = (e.loaded / e.total) * 100;
-                        updateProgressBar(percentage);
-                    }
-                }
-            }
-        });
-    });
-</script>
 
 </body>
 

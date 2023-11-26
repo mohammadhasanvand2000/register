@@ -1,4 +1,7 @@
+{% extends "product/index.html" %}
+
 {% load static %}
+
 <!DOCTYPE html>
 <html dir = "rtl"lang="en">
 
@@ -46,7 +49,7 @@
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
-            <div class="col-lg-4  col-md-6 d-flex flex-column align-items-center justify-content-center">
+            <div  class="col-lg-4  col-md-6 d-flex flex-column align-items-center justify-content-center">
 
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
@@ -101,7 +104,7 @@
 
                     
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">ثبت نام</button>
+                      <button class="btn btn-primary w-100" type="submit"formnovalidate>ثبت نام</button>
                     </div>
                     <div class="col-12">
                       <p class="small mb-0">آیا اکانت دارید ? <a href="{% url 'login' %}">ورود</a></p>
@@ -129,48 +132,47 @@
   <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
   <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
   <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
   <script src="{% static 'assets/js/main.js' %}"></script>
-  <!-- Vendor JS Files -->
-
-    <!-- product/pages-register.html -->
- 
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.querySelector('.needs-validation');
     
-    <script>
-      $(document).ready(function () {
-          
-          $('form').on('submit', function (e) {
-              e.preventDefault(); 
-  
-              
-              var formData = new FormData(this);
-              
-              
-              $.ajax({
-                url: '/auth/register/',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    csrfmiddlewaretoken: 'XS0cvYaSCrCWBKk8CKDJWb6g4rkHczWK40xvK4QVIdYl9KUoinXrFfEmTB5lMRg1',
-                    name: 'kamran',
-                    email: 'admin@gmail.com',
-                    phoneNumber: '09151413113',
-                    Password: '123456'
-                }),
-                success: function (response) {
-                    console.log('موفقیت‌آمیز!', response);
-                },
-                error: function (error) {
-                    console.error('خطا!', error);
-                }
-            });
-
-                      
-                 
+        form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+    
+            form.classList.add('was-validated');
+        });
+    
+        // افزودن اعتبارسنجی به فیلد شماره موبایل
+        var phoneNumberField = document.getElementById('phoneNumber');
+        phoneNumberField.addEventListener('input', function() {
+            var phoneNumberRegex = /^09\d{9}$/; // یک الگوی ساده برای شماره موبایل ایرانی
+    
+            if (!phoneNumberRegex.test(phoneNumberField.value)) {
+                phoneNumberField.setCustomValidity('لطفا یک شماره موبایل معتبر وارد کنید.');
+            } else {
+                phoneNumberField.setCustomValidity('');
+            }
+        });
+    
+        // افزودن اعتبارسنجی به فیلد ایمیل
+        var emailField = document.getElementById('email');
+        emailField.addEventListener('input', function() {
+            var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    
+            if (!emailRegex.test(emailField.value)) {
+                emailField.setCustomValidity('لطفا یک ایمیل معتبر وارد کنید.');
+            } else {
+                emailField.setCustomValidity('');
+            }
+        });
+    });
     </script>
-  
 
 </body>
 
